@@ -44,4 +44,10 @@ public class NacosDiscoveryEndpointAutoConfiguration {
 		return new NacosDiscoveryEndpoint(nacosNamingManager, nacosDiscoveryProperties);
 	}
 
+	@Bean
+	public NacosDiscoveryHealthIndicator nacosDiscoveryHealthIndicator(
+			NacosDiscoveryProperties nacosDiscoveryProperties) {
+		return new NacosDiscoveryHealthIndicator(
+				nacosDiscoveryProperties.namingServiceInstance());
+	}
 }
