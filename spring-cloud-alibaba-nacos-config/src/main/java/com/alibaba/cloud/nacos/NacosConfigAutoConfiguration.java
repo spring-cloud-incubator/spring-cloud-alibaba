@@ -16,6 +16,7 @@
 
 package com.alibaba.cloud.nacos;
 
+import com.alibaba.cloud.nacos.bridge.NacosCloudBridgeBoot;
 import com.alibaba.cloud.nacos.refresh.NacosContextRefresher;
 import com.alibaba.cloud.nacos.refresh.NacosRefreshHistory;
 import com.alibaba.cloud.nacos.refresh.NacosRefreshProperties;
@@ -47,6 +48,11 @@ public class NacosConfigAutoConfiguration {
 	@Bean
 	public NacosConfigManager nacosConfigManager() {
 		return new NacosConfigManager();
+	}
+
+	@Bean
+	public NacosCloudBridgeBoot nacosBootBridge() {
+		return new NacosCloudBridgeBoot();
 	}
 
 	@Bean
