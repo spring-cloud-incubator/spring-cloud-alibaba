@@ -94,6 +94,9 @@ public class NacosPropertySourceBuilder {
 						"Loading nacos data, dataId: '%s', group: '%s', data: %s", dataId,
 						group, data));
 			}
+
+			// TODO 文件格式解析能力统一下沉到 nacos-spring-context 中
+
 			Map<String, Object> dataMap = NacosDataParserHandler.getInstance()
 					.parseNacosData(data, fileExtension);
 			return dataMap == null ? EMPTY_MAP : dataMap;

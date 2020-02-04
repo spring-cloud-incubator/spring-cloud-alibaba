@@ -23,6 +23,8 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.cloud.nacos.NacosConfigProperties;
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.api.config.listener.Listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,21 +153,27 @@ class SampleRunner implements ApplicationRunner {
 class SampleController {
 
 	@Autowired
-	UserConfig userConfig;
+	private UserConfig userConfig;
 
 	@Autowired
 	private NacosConfigManager nacosConfigManager;
 
 	@Value("${user.name}")
-	String userName;
+	private String userName;
 
 	@Value("${user.age:25}")
-	Integer age;
+	private Integer age;
+
+	@NacosValue(value = "${user.remark}", autoRefreshed = true)
+	private String remark;
+
+	@Autowired
+	private NacosConfigProperties nacosConfigProperties;
 
 	@RequestMapping("/user")
 	public String simple() {
 		return "Hello Nacos Config!" + "Hello " + userName + " " + age + " [UserConfig]: "
-				+ userConfig + "!" + nacosConfigManager.getConfigService();
+				+ userConfig + ", remark : " + remark + "!" + nacosConfigManager.getConfigService();
 	}
 
 	@RequestMapping("/bool")

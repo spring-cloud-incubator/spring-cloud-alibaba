@@ -19,9 +19,10 @@ package com.alibaba.cloud.nacos;
 import java.util.Objects;
 
 import com.alibaba.cloud.nacos.diagnostics.analyzer.NacosConnectionFailureException;
-import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.spring.factory.CacheableEventPublishingNacosServiceFactory;
+import com.alibaba.nacos.spring.factory.NacosServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,9 @@ public class NacosConfigManager {
 	private static final Logger log = LoggerFactory.getLogger(NacosConfigManager.class);
 
 	private static ConfigService service = null;
+
+	private static NacosServiceFactory serviceFactory = CacheableEventPublishingNacosServiceFactory
+			.getSingleton();
 
 	private NacosConfigProperties nacosConfigProperties;
 
@@ -52,7 +56,11 @@ public class NacosConfigManager {
 			synchronized (NacosConfigManager.class) {
 				try {
 					if (Objects.isNull(service)) {
-						service = NacosFactory.createConfigService(
+
+						// Use the NacosServiceFactory with a caching mechanism to
+						// avoid repeatedly creating a large number of services
+
+						service = serviceFactory.createConfigService(
 								nacosConfigProperties.assembleConfigServiceProperties());
 					}
 				}

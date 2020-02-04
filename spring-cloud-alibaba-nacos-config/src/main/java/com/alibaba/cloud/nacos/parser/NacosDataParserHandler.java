@@ -30,6 +30,10 @@ public final class NacosDataParserHandler {
 		parser = this.createParser();
 	}
 
+	public static NacosDataParserHandler getInstance() {
+		return ParserHandler.HANDLER;
+	}
+
 	/**
 	 * Parsing nacos configuration content.
 	 * @param data config from Nacos
@@ -74,10 +78,6 @@ public final class NacosDataParserHandler {
 		return new NacosDataPropertiesParser().addNextParser(new NacosDataYamlParser())
 				.addNextParser(new NacosDataXmlParser())
 				.addNextParser(new NacosDataJsonParser());
-	}
-
-	public static NacosDataParserHandler getInstance() {
-		return ParserHandler.HANDLER;
 	}
 
 	private static class ParserHandler {

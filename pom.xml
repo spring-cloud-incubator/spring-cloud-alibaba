@@ -87,6 +87,10 @@
         <javax-servlet-api>3.0</javax-servlet-api>
         <slf4j-api.version>1.7.25</slf4j-api.version>
 
+        <!-- Nacos SpringBoot-->
+        <nacos-spring.version>0.3.5</nacos-spring.version>
+        <nacos-springboot.version>0.2.4</nacos-springboot.version>
+
         <!-- Apache Dubbo -->
         <dubbo-spring-boot.version>2.7.3</dubbo-spring-boot.version>
         <dubbo.version>2.7.3</dubbo.version>
@@ -253,6 +257,25 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-spring-context</artifactId>
+                <version>${nacos-spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-starter</artifactId>
+                <version>${nacos-springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-autoconfigure</artifactId>
+                <version>${nacos-springboot.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
