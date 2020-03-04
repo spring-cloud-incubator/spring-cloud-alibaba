@@ -115,6 +115,11 @@ public class NacosDiscoveryProperties {
 	private float weight = 1;
 
 	/**
+	 * If instance is ephemeral.
+	 */
+	private boolean enabled = true;
+
+	/**
 	 * cluster name for nacos .
 	 */
 	private String clusterName = "DEFAULT";
@@ -282,6 +287,14 @@ public class NacosDiscoveryProperties {
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+    }
 
 	public String getClusterName() {
 		return clusterName;

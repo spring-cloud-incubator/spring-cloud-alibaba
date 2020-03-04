@@ -161,6 +161,7 @@ public class NacosServiceRegistry implements ServiceRegistry<Registration> {
 		instance.setWeight(nacosDiscoveryProperties.getWeight());
 		instance.setClusterName(nacosDiscoveryProperties.getClusterName());
 		instance.setMetadata(registration.getMetadata());
+		instance.setEnabled(nacosDiscoveryProperties.getEnabled());
 
 		return instance;
 	}
