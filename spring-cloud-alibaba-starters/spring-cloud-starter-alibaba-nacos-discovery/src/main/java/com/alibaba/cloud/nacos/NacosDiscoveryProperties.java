@@ -199,6 +199,11 @@ public class NacosDiscoveryProperties {
 	 */
 	private Integer ipDeleteTimeout;
 
+	/**
+	 * Using hostname as Ip
+	 */
+	private boolean hostnameEnabled = false;
+
 	@Autowired
 	private InetUtils inetUtils;
 
@@ -229,7 +234,8 @@ public class NacosDiscoveryProperties {
 		if (StringUtils.isEmpty(ip)) {
 			// traversing network interfaces if didn't specify a interface
 			if (StringUtils.isEmpty(networkInterface)) {
-				ip = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
+				InetUtils.HostInfo hostInfo = inetUtils.findFirstNonLoopbackHostInfo();
+				ip = hostnameEnabled ? hostInfo.getHostname() : hostInfo.getIpAddress();
 			}
 			else {
 				NetworkInterface netInterface = NetworkInterface
@@ -244,7 +250,8 @@ public class NacosDiscoveryProperties {
 					InetAddress currentAddress = inetAddress.nextElement();
 					if (currentAddress instanceof Inet4Address
 							&& !currentAddress.isLoopbackAddress()) {
-						ip = currentAddress.getHostAddress();
+						ip = hostnameEnabled ? currentAddress.getHostName()
+								: currentAddress.getHostAddress();
 						break;
 					}
 				}
@@ -448,6 +455,14 @@ public class NacosDiscoveryProperties {
 		this.password = password;
 	}
 
+	public boolean isHostnameEnabled() {
+		return hostnameEnabled;
+	}
+
+	public void setHostnameEnabled(boolean hostnameEnabled) {
+		this.hostnameEnabled = hostnameEnabled;
+	}
+
 	@Override
 	public String toString() {
 		return "NacosDiscoveryProperties{" + "serverAddr='" + serverAddr + '\''
@@ -461,7 +476,8 @@ public class NacosDiscoveryProperties {
 				+ ", port=" + port + ", secure=" + secure + ", accessKey='" + accessKey
 				+ '\'' + ", secretKey='" + secretKey + '\'' + ", heartBeatInterval="
 				+ heartBeatInterval + ", heartBeatTimeout=" + heartBeatTimeout
-				+ ", ipDeleteTimeout=" + ipDeleteTimeout + '}';
+				+ ", ipDeleteTimeout=" + ipDeleteTimeout + ", hostnameEnabled="
+				+ hostnameEnabled + '}';
 	}
 
 	public void overrideFromEnv(Environment env) {
