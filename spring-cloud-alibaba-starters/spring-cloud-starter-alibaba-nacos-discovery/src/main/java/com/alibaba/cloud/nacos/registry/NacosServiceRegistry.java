@@ -60,7 +60,7 @@ public class NacosServiceRegistry implements ServiceRegistry<Registration> {
 		Instance instance = getNacosInstanceFromRegistration(registration);
 
 		try {
-			namingService.registerInstance(serviceId, group, instance);
+			nacosDiscoveryProperties.namingServiceInstance().registerInstance(serviceId, group, instance);
 			log.info("nacos registry, {} {} {}:{} register finished", group, serviceId,
 					instance.getIp(), instance.getPort());
 		}
