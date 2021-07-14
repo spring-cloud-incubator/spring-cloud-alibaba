@@ -138,6 +138,8 @@ public class SentinelHealthIndicator extends AbstractHealthIndicator {
 				dataSourceUp = false;
 				dataSourceDetailMap.put(dataSourceBeanName,
 						new Status(Status.UNKNOWN.getCode(), e.getMessage()));
+			} finally {
+				dataSource.close();
 			}
 		}
 
